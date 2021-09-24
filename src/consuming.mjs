@@ -32,13 +32,13 @@ export function chainCatch(){
         axios.get(`http://localhost:3000/addresses/${data.shippingAddress}`);
         throw new Error("Error!");
     })
-    // rejection handler returns a new fulfilled promise.
+    // rejection handler returns a new rejected promise.
     .catch(err => {
         console.log(`error: ${err}`);
         setText(err);
-        return {data: {}};
+        throw new Error("Second error");
     })
-    // then called on fulfilled promise
+    // then not called.
     .then(({data}) => {
         console.log(`2nd then called.`);
         setText(`City: ${data.my.city}`);
