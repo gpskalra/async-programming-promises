@@ -27,23 +27,12 @@ export function chain(){
 
 export function chainCatch(){
     axios.get("http://localhost:3000/orders/1")
-    // rejected promise returned.
     .then(({data}) => {
-        axios.get(`http://localhost:3000/addresses/${data.shippingAddress}`);
-        throw new Error("Error!");
+        return axios.get(`http://localhost:3000/addresses/${data.shippingAddress}`);
     })
-    // rejection handler returns a new rejected promise.
-    .catch(err => {
-        console.log(`error: ${err}`);
-        setText(err);
-        throw new Error("Second error");
-    })
-    // then not called.
     .then(({data}) => {
-        console.log(`2nd then called.`);
-        setText(`City: ${data.my.city}`);
+        setText(`City: ${data.city}`);
     })
-    // catch called on rejected promise.
     .catch(err => setText(err));
 }
 export function final(){
