@@ -29,3 +29,39 @@ export function chain(){
     })
 }
 ```
+4. A single catch added at the end of the chain will catch any error from the beginning till that catch.
+```
+export function chainCatch(){
+    axios.get("http://localhost:3000/orders/1")
+    .then(({data}) => {
+        // axios.my is undefined.
+        return axios.my.get(`http://localhost:3000/addresses/${data.shippingAddress}`);
+    })
+    .then(({data}) => {
+        // data.my is undefined.
+        setText(`City: ${data.my.city}`);
+    })
+    .catch(err => setText(err));
+}
+```
+We can add more catch sections in the chain. Each catch will catch all errors starting from (and including) the previous catch and upto that catch. If we use mutiple catch, we should make the catch handle all errors thoroughly - make sure to return appropriate object for the next then if needed or throw errors if needed or just appropriately handle the error. Returning an undefined from a catch can lead to additional errors in code.
+```
+export function chainCatch(){
+    axios.get("http://localhost:3000/orders/1")
+    .then(({data}) => {
+        axios.get(`http://localhost:3000/addresses/${data.shippingAddress}`);
+        throw new Error("Error!");
+    })
+    .catch(err => {
+        if (err.includes("abc")) {
+            throw new Error("abc error");
+        } else {
+            return {data: {}};
+        }
+    })
+    .then(({data}) => {
+        setText(`City: ${data.my.city}`);
+    })
+    .catch(err => setText(err));
+}
+```
