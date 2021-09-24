@@ -28,15 +28,17 @@ export function chain(){
 export function chainCatch(){
     axios.get("http://localhost:3000/orders/1")
     .then(({data}) => {
-        return axios.get(`http://localhost:3000/addresses/${data.shippingAddress}`);
+        // my understanding - anonymous function throws an error.
+        // Promise.then wraps the error into
+        // a new rejected promise and returns the promise.
+        return axios.my.get(`http://localhost:3000/addresses/${data.shippingAddress}`);
     })
-    // my understanding - anonymous function throws an error.
-    // Promise.then wraps the error into
-    // a new rejected promise and returns the promise.
+    // my understanding - this then is not called since the promise is rejected.
     .then(({data}) => {
-        setText(`City: ${data.my.city}`);
+        setText(`City: ${data.city}`);
     })
-    // my understanding - rejection handler is attached. So it is called when the promise is rejected.
+    // my understanding - this catch is also a rejection handler for this rejected promise.
+    // so it is called.
     .catch(err => setText(err));
 }
 export function final(){
