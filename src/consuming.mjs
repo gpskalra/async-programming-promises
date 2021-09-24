@@ -10,12 +10,9 @@ export function get() {
 export function getCatch(){
     axios.get("http://localhost:3000/orders/123")
     .then((result) => {
-        if (result.status === 200) {
-            setText(JSON.stringify(result.data));
-        } else {
-            setText("Error");
-        }
-    });
+        setText(JSON.stringify(result.data));
+    })
+    .catch(err => {setText(err);});
 }
 
 export function chain(){
@@ -28,4 +25,8 @@ export function final(){
 
 export function onunhandledrejection(event){
     console.warn(`UNHANDLED PROMISE REJECTION: ${event.reason}`);
+}
+
+export function onrejectionhandled(e) {
+    console.info(`Promise rejection handled: ${e.reason}`);
 }

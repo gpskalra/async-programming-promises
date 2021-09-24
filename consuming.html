@@ -26,7 +26,7 @@
             <h1>Results</h1>
         </div>
         <script type="module">
-            import { get, getCatch, chain, chainCatch, final, onunhandledrejection } from "./src/consuming.mjs";
+            import { get, getCatch, chain, chainCatch, final, onunhandledrejection, onrejectionhandled } from "./src/consuming.mjs";
 
             window.get = get;
             window.getCatch = getCatch;
@@ -34,6 +34,7 @@
             window.chainCatch = chainCatch;
             window.final = final;
             window.onunhandledrejection = onunhandledrejection;
+            window.onrejectionhandled = onrejectionhandled;
         </script>
     </body>
 </html>
