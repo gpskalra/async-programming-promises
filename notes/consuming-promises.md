@@ -17,3 +17,15 @@ export function getCatch(){
     .catch(err => {setText(err);});
 }
 ```
+3. then and catch return promises. Use chained thens to perform a second async operation using the results from the first. Make sure to return a promise from the first then.
+```
+export function chain(){
+    axios.get("http://localhost:3000/orders/1")
+    .then(({data}) => {
+        return axios.get(`http://localhost:3000/addresses/${data.shippingAddress}`);
+    })
+    .then(({data}) => {
+        setText(`City: ${data.city}`);
+    })
+}
+```
