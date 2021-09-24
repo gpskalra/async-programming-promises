@@ -25,3 +25,7 @@ export function chainCatch(){
 }
 export function final(){
 }
+
+export function onunhandledrejection(event){
+    console.warn(`UNHANDLED PROMISE REJECTION: ${event.reason}`);
+}
