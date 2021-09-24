@@ -22,10 +22,22 @@ export function chain(){
     })
     .then(({data}) => {
         setText(`City: ${data.city}`);
-    })
+    });
 }
 
 export function chainCatch(){
+    axios.get("http://localhost:3000/orders/1")
+    // my understanding - returns a new fulfilled promise wrapping undefined.
+    .then(({data}) => {
+        axios.get(`http://localhost:3000/addresses/${data.shippingAddress}`);
+    })
+    // my understanding - the anonymous tries to destructure undefined. Promise.then wraps the error into
+    // a new rejected promise and returns the promise.
+    .then(({data}) => {
+        setText(`City: ${data.city}`);
+    })
+    // my understanding - rejection handler is attached. So it is called when the promise is rejected.
+    .catch(err => setText(err));
 }
 export function final(){
 }
