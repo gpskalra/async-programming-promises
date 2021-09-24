@@ -7,3 +7,13 @@ export function get() {
     });
 }
 ```
+2. Use catch to handle rejection. Not using catch here would lead to a "unhandled rejection" event and also bubble up an uncaught error to the console.
+```
+export function getCatch(){
+    axios.get("http://localhost:3000/orders/123")
+    .then((result) => {
+        setText(JSON.stringify(result.data));
+    })
+    .catch(err => {setText(err);});
+}
+```
